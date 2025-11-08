@@ -284,21 +284,13 @@ npm test
 
 This project is licensed under the MIT License.
 
-## 🙏 Acknowledgments
+## 👨‍💻 Author
 
-- **YOLOv8**: Ultralytics for object detection
-- **Django**: Web framework
-- **React**: Frontend framework
-- **Tailwind CSS**: Styling framework
-- **Chart.js**: Data visualization
+**Kevin Savaliya**
 
-## 📞 Support
-
-For support and questions:
-- Create an issue on GitHub
-- Check the documentation in each directory
-- Review the API documentation
+* GitHub: [@kevin-savaliya](https://github.com/kevin-savaliya)
+* LinkedIn: [@kevin-savaliya](https://www.linkedin.com/in/kevin-savaliya-787794241/)
 
 ---
 
-**Built with ❤️ using modern web technologies and AI/ML** 
+> ⭐️ **If you found this project helpful, please star the repository to support my work!**
