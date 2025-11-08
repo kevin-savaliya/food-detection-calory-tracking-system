@@ -24,48 +24,50 @@ The architecture diagram below uses Mermaid (flowchart) so it renders as clean b
 
 ```mermaid
 flowchart TD
-   subgraph CLIENT[Client Layer\n(React.js Frontend)]
+   subgraph CLIENT["Client Layer<br/>(React.js Frontend)"]
       direction TB
       Dashboard[Dashboard]
       FoodUpload[Food Upload]
       Reports[Reports]
    end
 
-   subgraph APP[Application Layer\n(Django REST Framework)]
+   subgraph APP["Application Layer<br/>(Django REST Framework)"]
       direction TB
       Auth[Auth API]
       Detection[Detection API]
       Nutrition[Nutrition API]
    end
 
-   subgraph AI[Intelligence Layer\n(AI/ML Processing)]
+   subgraph AI["Intelligence Layer<br/>(AI/ML Processing)"]
       direction TB
-      YOLO[YOLOv8 CNN\n(Feature extraction → Detection)\nOutput: Food name + Confidence]
-      RF[Random Forest Classifier\n(Input: 7D nutrition vector)\nOutput: Category + Confidence]
-      Fusion[Ensemble Fusion\nFinal output]
+      YOLO["YOLOv8 CNN<br/>(Feature extraction → Detection)<br/>Output: Food name + Confidence"]
+      RF["Random Forest Classifier<br/>(Input: 7D nutrition vector)<br/>Output: Category + Confidence"]
+      Fusion["Ensemble Fusion<br/>Final output"]
       YOLO --> RF
       RF --> Fusion
    end
 
-   subgraph DATA[Data Layer\n(PostgreSQL / SQLite)]
+   subgraph DATA["Data Layer<br/>(PostgreSQL / SQLite)"]
       direction TB
       Users[User Profiles]
       NutritionDB[Nutrition Database]
       History[Detection History]
    end
 
-   %% Connections
-   Dashboard ---|HTTP/REST| APP
-   FoodUpload ---|HTTP/REST| APP
-   Reports ---|HTTP/REST| APP
-   APP -->|calls / triggers| AI
-   APP -->|reads/writes| DATA
-   AI -->|stores results| DATA
-   Fusion --> APP
+   %% Connections (point to API nodes instead of subgraph IDs)
+   Dashboard -->|HTTP/REST| Detection
+   FoodUpload -->|HTTP/REST| Detection
+   Reports -->|HTTP/REST| Nutrition
 
-   %% Annotations
-   classDef layer fill:#f9f,stroke:#333,stroke-width:1px;
-   class CLIENT,APP,AI,DATA layer;
+   Detection -->|calls / triggers| YOLO
+   Detection -->|calls / triggers| RF
+   Fusion -->|stores results| NutritionDB
+   Fusion -->|stores results| History
+
+   Auth -->|reads/writes| Users
+   Detection -->|reads/writes| NutritionDB
+
+   %% (Optional) style adjustments can be added if desired
 ```
 
 
