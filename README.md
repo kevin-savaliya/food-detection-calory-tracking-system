@@ -20,55 +20,54 @@
 
 ## 🏗️ System Architecture
 
-The architecture diagram below uses Mermaid (flowchart) so it renders as clean boxes on GitHub and many Markdown viewers.
++---------------------------------------------------------------+
+|                         CLIENT LAYER                          |
+|                     (React.js Frontend)                       |
+|   +-------------+   +-------------+   +-------------+         |
+|   | Dashboard   |   | Food Upload |   |   Reports   |         |
+|   +-------------+   +-------------+   +-------------+         |
++---------------------------------------------------------------+
+                            ↓ HTTP/REST API
++---------------------------------------------------------------+
+|                      APPLICATION LAYER                        |
+|                 (Django REST Framework)                       |
+|   +-------------+   +-------------+   +-------------+         |
+|   |  Auth API   |   | Detection   |   | Nutrition   |         |
+|   |             |   | API         |   | API         |         |
+|   +-------------+   +-------------+   +-------------+         |
++---------------------------------------------------------------+
+                            ↓
++---------------------------------------------------------------+
+|                      INTELLIGENCE LAYER                       |
+|                    (AI/ML Processing)                         |
+|   +-------------------------------------------------------+   |
+|   |                 YOLOv8 CNN (60% weight)               |   |
+|   | Input: 640×640 image → Feature Extraction → Detection |   |
+|   | Output: Food name + Confidence score                  |   |
+|   +-------------------------------------------------------+   |
+|                            ↓                                  |
+|   +-------------------------------------------------------+   |
+|   |          Random Forest Classifier (40% weight)        |   |
+|   | Input: 7D nutrition vector → Classification           |   |
+|   | Output: Category + Confidence score                   |   |
+|   +-------------------------------------------------------+   |
+|                            ↓                                  |
+|   +-------------------------------------------------------+   |
+|   |                 Ensemble Fusion                       |   |
+|   |   Final Accuracy: 88.5%                               |   |
+|   +-------------------------------------------------------+   |
++---------------------------------------------------------------+
+                            ↓
++---------------------------------------------------------------+
+|                         DATA LAYER                            |
+|             (PostgreSQL / SQLite Database)                    |
+|   +--------------+   +-------------+   +-------------+        |
+|   | User         |   | Nutrition   |   | Detection   |        |
+|   | Profiles     |   | Database    |   | History     |        |
+|   | (2,395 foods)|   |             |   |             |        |
+|   +--------------+   +-------------+   +-------------+        |
++---------------------------------------------------------------+
 
-```mermaid
-flowchart TD
-   subgraph CLIENT["Client Layer<br/>(React.js Frontend)"]
-      direction TB
-      Dashboard[Dashboard]
-      FoodUpload[Food Upload]
-      Reports[Reports]
-   end
-
-   subgraph APP["Application Layer<br/>(Django REST Framework)"]
-      direction TB
-      Auth[Auth API]
-      Detection[Detection API]
-      Nutrition[Nutrition API]
-   end
-
-   subgraph AI["Intelligence Layer<br/>(AI/ML Processing)"]
-      direction TB
-      YOLO["YOLOv8 CNN<br/>(Feature extraction → Detection)<br/>Output: Food name + Confidence"]
-      RF["Random Forest Classifier<br/>(Input: 7D nutrition vector)<br/>Output: Category + Confidence"]
-      Fusion["Ensemble Fusion<br/>Final output"]
-      YOLO --> RF
-      RF --> Fusion
-   end
-
-   subgraph DATA["Data Layer<br/>(PostgreSQL / SQLite)"]
-      direction TB
-      Users[User Profiles]
-      NutritionDB[Nutrition Database]
-      History[Detection History]
-   end
-
-   %% Connections (point to API nodes instead of subgraph IDs)
-   Dashboard -->|HTTP/REST| Detection
-   FoodUpload -->|HTTP/REST| Detection
-   Reports -->|HTTP/REST| Nutrition
-
-   Detection -->|calls / triggers| YOLO
-   Detection -->|calls / triggers| RF
-   Fusion -->|stores results| NutritionDB
-   Fusion -->|stores results| History
-
-   Auth -->|reads/writes| Users
-   Detection -->|reads/writes| NutritionDB
-
-   %% (Optional) style adjustments can be added if desired
-```
 
 
 ## 🛠 Tech Stack
