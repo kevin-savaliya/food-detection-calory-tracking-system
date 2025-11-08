@@ -1,0 +1,44 @@
+{
+  "detected_foods": [
+    "broccoli",
+    "milk"
+  ],
+  "confidence_scores": {
+    "broccoli": {
+      "cnn": 0.9318646186512627,
+      "svm": 0.9868306186972586,
+      "ensemble": 0.953851018669661
+    },
+    "milk": {
+      "cnn": 0.9103608844413493,
+      "svm": 0.5337971580889238,
+      "ensemble": 0.7597353939003791
+    }
+  },
+  "nutritional_info": [
+    {
+      "food_name": "broccoli raw",
+      "calories": 31.0,
+      "protein": 2.6,
+      "carbohydrates": 6.0,
+      "fat": 0.3,
+      "fiber": 2.4,
+      "sugars": 1.5,
+      "sodium": 0.049
+    },
+    {
+      "food_name": "soymilk",
+      "calories": 109.0,
+      "protein": 7.1,
+      "carbohydrates": 8.4,
+      "fat": 4.8,
+      "fiber": 1.0,
+      "sugars": 6.1,
+      "sodium": 0.1
+    }
+  ],
+  "timestamp": "2025-10-16T09:27:00.614462",
+  "ensemble_confidence": 0.8567932062850201,
+  "meal_type": "breakfast",
+  "meal_confidence": 0.6428571428571429
+}
